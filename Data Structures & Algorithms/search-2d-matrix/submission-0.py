@@ -1,0 +1,40 @@
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        
+        rows = len(matrix)
+        cols = len(matrix[0])
+        
+        top = 0
+        bottom = rows - 1
+        
+        # Find correct row
+        while top <= bottom:
+            mid = (top + bottom) // 2
+            
+            if target > matrix[mid][cols-1]:
+                top = mid + 1
+            elif target < matrix[mid][0]:
+                bottom = mid - 1
+            else:
+                break
+        
+        if not (top <= bottom):
+            return False
+        
+        row = (top + bottom) // 2
+        
+        # Binary search in row
+        left = 0
+        right = cols - 1
+        
+        while left <= right:
+            mid = (left + right) // 2
+             
+            if matrix[row][mid] < target:
+                left = mid + 1
+            elif matrix[row][mid] > target:
+                right = mid - 1
+            else:
+                return True
+        
+        return False
